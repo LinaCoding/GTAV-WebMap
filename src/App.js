@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Map from "./map/map";
 import MainMenu from "./menu/mainMenu";
 import MarkerMenu from "./menu/markerMenu";
+import mergeImages from 'merge-images';
 
 function App() {
   const [menu, setMenu] = useState("marker");
