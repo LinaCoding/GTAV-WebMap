@@ -1,0 +1,146 @@
+[
+    {
+        "id": 0,
+        "path": "https://docs.fivem.net//blips/radar_higher.png"
+    },
+    {
+        "id": 1,
+        "path": "https://docs.fivem.net//blips/radar_level.png"
+    },
+    {
+        "id": 2,
+        "path": "https://docs.fivem.net//blips/radar_lower.png"
+    },
+    {
+        "id": 3,
+        "path": "https://docs.fivem.net//blips/radar_police_ped.png"
+    },
+    {
+        "id": 4,
+        "path": "https://docs.fivem.net//blips/radar_wanted_radius.png"
+    },
+    {
+        "id": 6,
+        "path": "https://docs.fivem.net//blips/radar_centre.png"
+    },
+    {
+        "id": 7,
+        "path": "https://docs.fivem.net//blips/radar_north.png"
+    },
+    {
+        "id": 8,
+        "path": "https://docs.fivem.net//blips/radar_waypoint.png"
+    },
+    {
+        "id": 11,
+        "path": "https://docs.fivem.net//blips/radar_weapon_higher.png"
+    },
+    {
+        "id": 12,
+        "path": "https://docs.fivem.net//blips/radar_weapon_lower.png"
+    },
+    {
+        "id": 13,
+        "path": "https://docs.fivem.net//blips/radar_higher_ai.png"
+    },
+    {
+        "id": 14,
+        "path": "https://docs.fivem.net//blips/radar_lower_ai.png"
+    },
+    {
+        "id": 15,
+        "path": "https://docs.fivem.net//blips/radar_police_heli_spin.png"
+    },
+    {
+        "id": 16,
+        "path": "https://docs.fivem.net//blips/radar_police_plane_move.png"
+    },
+    {
+        "id": 36,
+        "path": "https://docs.fivem.net//blips/radar_cable_car.png"
+    },
+    {
+        "id": 38,
+        "path": "https://docs.fivem.net//blips/radar_raceflag.png"
+    },
+    {
+        "id": 40,
+        "path": "https://docs.fivem.net//blips/radar_safehouse.png"
+    },
+    {
+        "id": 41,
+        "path": "https://docs.fivem.net//blips/radar_police.png"
+    },
+    {
+        "id": 42,
+        "path": "https://docs.fivem.net//blips/radar_police_chase.png"
+    },
+    {
+        "id": 43,
+        "path": "https://docs.fivem.net//blips/radar_police_heli.png"
+    },
+    {
+        "id": 47,
+        "path": "https://docs.fivem.net//blips/radar_snitch.png"
+    },
+    {
+        "id": 50,
+        "path": "https://docs.fivem.net//blips/radar_crim_carsteal.png"
+    },
+    {
+        "id": 51,
+        "path": "https://docs.fivem.net//blips/radar_crim_drugs.png"
+    },
+    {
+        "id": 52,
+        "path": "https://docs.fivem.net//blips/radar_crim_holdups.png"
+    },
+    {
+        "id": 56,
+        "path": "https://docs.fivem.net//blips/radar_cop_patrol.png"
+    },
+    {
+        "id": 57,
+        "path": "https://docs.fivem.net//blips/radar_cop_player.png"
+    },
+    {
+        "id": 58,
+        "path": "https://docs.fivem.net//blips/radar_crim_wanted.png"
+    },
+    {
+        "id": 59,
+        "path": "https://docs.fivem.net//blips/radar_heist.png"
+    },
+    {
+        "id": 60,
+        "path": "https://docs.fivem.net//blips/radar_police_station.png"
+    },
+    {
+        "id": 61,
+        "path": "https://docs.fivem.net//blips/radar_hospital.png"
+    },
+    {
+        "id": 64,
+        "path": "https://docs.fivem.net//blips/radar_helicopter.png"
+    },
+    {
+        "id": 66,
+        "path": "https://docs.fivem.net//blips/radar_random_character.png"
+    },
+    {
+        "id": 67,
+        "path": "https://docs.fivem.net//blips/radar_security_van.png"
+    },
+    {
+        "id": 68,
+        "path": "https://docs.fivem.net//blips/radar_tow_truck.png"
+    },
+    {
+        "id": 71,
+        "path": "https://docs.fivem.net//blips/radar_barber.png"
+    },
+    {
+        "id": 72,
+        "path": "https://docs.fivem.net//blips/radar_car_mod_shop.png"
+    }
+]

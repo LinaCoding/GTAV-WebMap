@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Blue Marker",
+        "path": "marker/marker_blue.png"
+    },
+    {
+        "name": "Aquablue Marker",
+        "path": "marker/marker_aquablue.png"
+    },
+    {
+        "name": "Brown Marker",
+        "path": "marker/marker_brown.png"
+    },
+    {
+        "name": "Gray Marker",
+        "path": "marker/marker_gray.png"
+    },
+    {
+        "name": "Green Marker",
+        "path": "marker/marker_green.png"
+    },
+    {
+        "name": "Lightblue Marker",
+        "path": "marker/marker_lightblue.png"
+    },
+    {
+        "name": "Lightpurple Marker",
+        "path": "marker/marker_lightpurple.png"
+    },
+    {
+        "name": "Lightred Marker",
+        "path": "marker/marker_lightred.png"
+    },
+    {
+        "name": "Orange Marker",
+        "path": "marker/marker_orange.png"
+    },
+    {
+        "name": "Pink Marker",
+        "path": "marker/marker_pink.png"
+    },
+    {
+        "name": "Purple Marker",
+        "path": "marker/marker_purple.png"
+    },
+    {
+        "name": "Red Marker",
+        "path": "marker/marker_red.png"
+    }    
+]
