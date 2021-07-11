@@ -1,11 +1,12 @@
 import { LayersControl, MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 import * as L from 'leaflet';
 import "leaflet/dist/leaflet.css";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import mergeImages from "merge-images";
+import { MainContext } from "../reactContext";
 
 function Map() {
-    const [markerList, setMakerList] = useState([]);
+    const context = useContext(MainContext);
 
     useEffect(() => {
         createMarker(1, [-128,128], "marker_red", "radar_safehouse", "test");
@@ -31,8 +32,8 @@ function Map() {
 
     const createMarker = (id, position, marker, icon, data) => {
         merge(marker, icon).then((image) => {
-            setMakerList([...markerList, { id, position, image, popup: data }]);
-            console.log(markerList);
+            context.setMarkerList([...context.markerList, { id, position, image, popup: data }])
+            console.log(context.markerList);
         });
     }
 
@@ -56,14 +57,14 @@ function Map() {
             scrollWheelZoom={true}
             maxBounds={[[0,0],[-256,256]]}
             crs={ L.CRS.Simple }
-            
             style={{ height: "100%", width: "100%" }}
         >
             <MapEvents></MapEvents>
             {
-                markerList.map(marker => {
+                context.markerList.map(marker => {
                     return (
                         <Marker 
+                            key={marker.position}
                             icon={createIcon(marker.image)}
                             position={marker.position}
                         >
