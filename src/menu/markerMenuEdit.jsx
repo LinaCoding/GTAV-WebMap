@@ -7,8 +7,12 @@ const MarkerMenuEdit = ({menu, setMenu}) => {
     const context = useContext(MainContext);
     console.log(context);
 
-    const centerMarker = (pos) => {
-        context.mapContext.setView(pos, context.mapContext.getZoom());
+    const centerMarker = (marker) => {
+        context.mapContext.setView(marker.position, context.mapContext.getZoom());
+
+        if(menu === "marker-edit-editor") {
+            context.setEditMarker(marker);
+        }
     }
 
     return (
@@ -60,7 +64,7 @@ const MarkerMenuEdit = ({menu, setMenu}) => {
                             {
                                 context.markerList.map(marker => {
                                     return (
-                                        <tr className="hover:bg-blue-200" onClick={() => centerMarker(marker.position)}>
+                                        <tr className="hover:bg-blue-200" onClick={() => centerMarker(marker)}>
                                             <td className="border border-emerald-800 text-center">{marker.id}</td>
                                             <td className="border border-emerald-800 text-center">[{marker?.position[0] + "," + marker?.position[1]}]</td>
                                             <td className="border border-emerald-800">

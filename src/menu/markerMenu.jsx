@@ -24,8 +24,8 @@ const MarkerMenu = ({setMenu, menu}) => {
                 </button>
                 <button 
                     className={"flex-grow hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border-b hover:border-transparent " 
-                        + (menu === "marker-edit" ? "bg-blue-500 text-white border-transparent" : "text-blue-700 border-blue-500")}                    
-                    onClick={() => setMenu("marker-edit")}
+                        + (menu?.match("marker-edit") ? "bg-blue-500 text-white border-transparent" : "text-blue-700 border-blue-500")}                    
+                    onClick={() => setMenu("marker-edit-move")}
                 >
                     <FontAwesomeIcon className="mr-1" icon={faPenSquare}></FontAwesomeIcon>
                     Edit

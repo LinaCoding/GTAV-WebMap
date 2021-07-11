@@ -10,8 +10,8 @@ function Map({menu}) {
     const context = useContext(MainContext);
 
     useEffect(() => {
-        createMarker(1, [-128,128], "marker_red", "radar_safehouse", "test");
-        createMarker(2, [-100,100], "marker_green", "radar_safehouse", "test");
+        createMarker(1, [-128,128], "marker_red", "radar_safehouse", [{ name: "id", type: "String", value:"Test"}]);
+        createMarker(2, [-100,100], "marker_green", "radar_safehouse", []);
     }, []);
 
     useEffect(() => {
@@ -45,14 +45,13 @@ function Map({menu}) {
 
     const createMarker = (id, position, marker, icon, data) => {
         merge(marker, icon).then((image) => {
-            context.setMarkerList((prev) => { return [...prev, { id, position, image, popup: data }] });
+            context.setMarkerList((prev) => { return [...prev, { id, position, image, data: data }] });
         });
     }
 
     const moveMarker = (event, marker) => {
         let newMarker = marker;
         newMarker.position = [event.target._latlng.lat, event.target._latlng.lng];
-        console.log(newMarker);
         context.setMarkerList([...context.markerList.filter(x => x !== marker), newMarker]);
     }
 
@@ -67,7 +66,6 @@ function Map({menu}) {
     }
 
     return (
-        <div className="map leaflet-container" >
         <MapContainer
             center={[-128,128]}
             minZoom={2}
@@ -113,7 +111,6 @@ function Map({menu}) {
             </LayersControl.BaseLayer>
             </LayersControl>
         </MapContainer>
-        </div>
     );
 }
 
