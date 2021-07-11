@@ -1,16 +1,22 @@
 import { LayersControl, MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 import * as L from 'leaflet';
 import "leaflet/dist/leaflet.css";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import mergeImages from "merge-images";
 import { MainContext } from "../reactContext";
 
-function Map() {
+function Map({menu}) {
+    const [map,setMap] = useState()
     const context = useContext(MainContext);
 
     useEffect(() => {
         createMarker(1, [-128,128], "marker_red", "radar_safehouse", "test");
+        createMarker(2, [-100,100], "marker_green", "radar_safehouse", "test");
     }, []);
+
+    useEffect(() => {
+        context.setMapContext(map);
+    }, [map]);
 
     const merge = async (marker, icon) => {
       return mergeImages([
@@ -27,14 +33,27 @@ function Map() {
             iconSize: [30,40],
             iconAnchor: [15,40],
             popupAnchor: [0,-40]
-        })
+        });
+    }
+
+    const removeMarker = (marker) => {
+        console.log(context.markerList);
+        if(menu === "marker-edit-remove") {
+            context.setMarkerList(context.markerList.filter(x => x.id !== marker.id));
+        }
     }
 
     const createMarker = (id, position, marker, icon, data) => {
         merge(marker, icon).then((image) => {
-            context.setMarkerList([...context.markerList, { id, position, image, popup: data }])
-            console.log(context.markerList);
+            context.setMarkerList((prev) => { return [...prev, { id, position, image, popup: data }] });
         });
+    }
+
+    const moveMarker = (event, marker) => {
+        let newMarker = marker;
+        newMarker.position = [event.target._latlng.lat, event.target._latlng.lng];
+        console.log(newMarker);
+        context.setMarkerList([...context.markerList.filter(x => x !== marker), newMarker]);
     }
 
     const MapEvents = () => {
@@ -57,7 +76,7 @@ function Map() {
             scrollWheelZoom={true}
             maxBounds={[[0,0],[-256,256]]}
             crs={ L.CRS.Simple }
-            style={{ height: "100%", width: "100%" }}
+            whenCreated={setMap}
         >
             <MapEvents></MapEvents>
             {
@@ -67,6 +86,11 @@ function Map() {
                             key={marker.position}
                             icon={createIcon(marker.image)}
                             position={marker.position}
+                            draggable={ menu === "marker-edit-move" }
+                            eventHandlers={{
+                                click: (e) => { removeMarker(marker); },
+                                moveend: (e) => { moveMarker(e, marker); }
+                            }}
                         >
                             <Popup>
                                 {marker.popup}

@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Map from "./map/map";
 import MainMenu from "./menu/mainMenu";
 import MarkerMenu from "./menu/markerMenu";
@@ -17,7 +17,7 @@ function App() {
         )
       }
       {
-        menu.match(/(?:^marker$|^marker-(?:create|edit|remove)$)/) && (
+        menu.match(/(?:^marker$|^marker-(?:create|edit|remove))/) && (
           <div className="flex-none w-80 border-r border-gray-300">
             <MarkerMenu setMenu={setMenu} menu={menu}></MarkerMenu>
           </div>
@@ -25,9 +25,19 @@ function App() {
       }
       
       <div className="flex-grow">
-        <Map></Map>
+        <div className="flex flex-wrap h-screen flex-row">
+            <div class="w-full h-50">
+              <Map menu={menu}></Map>
+            </div>
+          {
+          menu === "marker-edit-editor" && (
+            <div class="w-full ">
+              hey
+            </div>
+          )
+        }
+        </div>
       </div>
-
     </div>
   );
 }

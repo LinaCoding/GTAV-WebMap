@@ -1,24 +1,34 @@
 import React, { useState } from "react";
 
 export const MainContext = React.createContext({
-    markerList : []
+    markerList: [],
+    mapContext: undefined,
+    setMarkerList: function(x) { return },
+    pushMarker: function(x) { return },
+    setMapContext: function(x) { return },
 });
 
 const ContextState = (props) => {
-    const [state, setState] = useState({
-        markerList: [],
-        setMarkerList: function() { return; }
-    });
+    const [marker, setMarker] = useState([]);
+    const [mapContext, setContext] = useState(undefined);
 
     const setMarkerList = (markers) => {
-        setState({...state, markerList: markers});
+        console.log(markers);
+        setMarker(markers);
     }
     setMarkerList.bind(this);
 
+    const setMapContext = (context) => {
+        setContext(context);
+    }
+    setMapContext.bind(this);
+
     return (
         <MainContext.Provider value={{
-            markerList: state.markerList,
-            setMarkerList: setMarkerList
+            markerList: marker,
+            setMarkerList: setMarkerList,
+            mapContext: mapContext,
+            setMapContext: setMapContext
         }}>
             {props.children}
         </MainContext.Provider>
