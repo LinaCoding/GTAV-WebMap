@@ -1,4 +1,5 @@
 import './App.css';
+import './tailwind.output.css';
 import React, { useContext, useState } from "react";
 import Map from "./map/map";
 import MainMenu from "./menu/mainMenu";
@@ -10,7 +11,7 @@ function App() {
   const [menu, setMenu] = useState("marker-create");
   const context = useContext(MainContext);
 
-  const updateMenu = (newMenu) => {
+  const updateMenu = (newMenu : string) => {
     if(menu === "marker-edit-editor" && newMenu !== "marker-edit-editor") {
       context.setEditMarker(undefined);
     }
@@ -23,7 +24,7 @@ function App() {
       {
         menu === "main" && (
           <div className="flex-none w-20 items-center border-r border-gray-300">
-            <MainMenu setMenu={updateMenu}></MainMenu>
+            <MainMenu menu={menu} setMenu={updateMenu}></MainMenu> 
           </div>
         )
       }
@@ -37,12 +38,12 @@ function App() {
       
       <div className="flex-grow">
         <div className="grid grid-rows-4 h-full">
-            <div class={"w-full " + (menu === "marker-edit-editor" && context.editMarker ? "row-span-3" : "row-span-4")}>
+            <div className={"w-full " + (menu === "marker-edit-editor" && context.editMarker ? "row-span-3" : "row-span-4")}>
               <Map menu={menu}></Map>
             </div>
           {
           menu === "marker-edit-editor" && context.editMarker && (
-            <div class="w-full row-span-1 p-2 border-t border-gray-300">
+            <div className="w-full row-span-1 p-2 border-t border-gray-300">
               <DataEditor></DataEditor>
             </div>
           )

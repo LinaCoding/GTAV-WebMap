@@ -1,10 +1,11 @@
 import { faChevronLeft, faPenSquare, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { IMenuProps } from "../types/main";
 import MarkerMenuCreate from "./markerMenuCreate";
 import MarkerMenuEdit from "./markerMenuEdit";
 
-const MarkerMenu = ({setMenu, menu}) => {
+const MarkerMenu = ({setMenu, menu} : IMenuProps) => {
     return (
         <React.Fragment>
             <div className="container bg-gray-200 border-b border-gray-400">

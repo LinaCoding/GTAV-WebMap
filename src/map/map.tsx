@@ -4,27 +4,28 @@ import "leaflet/dist/leaflet.css";
 import React, { useContext, useEffect, useState } from "react";
 import mergeImages from "merge-images";
 import { MainContext } from "../reactContext";
+import { IDataRow, IMarker, IPosition } from "../types/main";
 
-function Map({menu}) {
-    const [map,setMap] = useState()
+function Map({menu} : { menu: string}) {
+    const [map, setMap] = useState<L.Map>()
     const context = useContext(MainContext);
 
     useEffect(() => {
-        createMarker(1, [-128,128], "marker_red", "radar_safehouse", [{ name: "id", type: "String", value:"Test"}]);
-        createMarker(2, [-100,100], "marker_green", "radar_safehouse", []);
+        createMarker(1, { x: -128, y: 128}, "marker_red", "radar_safehouse", [{ id: 0, name: "id", type: "String", value:"Test"}]);
+        createMarker(2, { x: -100, y: 100 }, "marker_green", "radar_safehouse", []);
     }, []);
 
     useEffect(() => {
         context.setMapContext(map);
     }, [map]);
 
-    const merge = async (marker, icon) => {
+    const merge = async (marker : string, icon : string) => {
       return mergeImages([
         { src: `/marker/${marker}.png`, x: 0, y: 0}, 
         { src: `/marker/${icon}.png`, x: 13, y: 14}]);
     }
 
-    const createIcon = (image) => {
+    const createIcon = (image : string) => {
         return L.icon({
             iconUrl: image,
             shadowUrl: "marker/shadow.png",
@@ -36,23 +37,33 @@ function Map({menu}) {
         });
     }
 
-    const removeMarker = (marker) => {
+    const removeMarker = (marker : IMarker) => {
         console.log(context.markerList);
         if(menu === "marker-edit-remove") {
-            context.setMarkerList(context.markerList.filter(x => x.id !== marker.id));
+            context.setMarkerList(context.markerList?.filter(x => x.id !== marker.id));
         }
     }
 
-    const createMarker = (id, position, marker, icon, data) => {
+    const createMarker = (id : number, position : IPosition, marker : string, icon : string, data : IDataRow[]) => {
         merge(marker, icon).then((image) => {
-            context.setMarkerList((prev) => { return [...prev, { id, position, image, data: data }] });
+            context.setMarkerList((prev) => { 
+                if(prev) {
+                    return [...prev, { id, position, image, data: data }]; 
+                } else {
+                    return [{ id, position, image, data: data }]
+                }
+            });
         });
     }
 
-    const moveMarker = (event, marker) => {
+    const moveMarker = (event :L.LeafletEvent, marker: IMarker) => {
         let newMarker = marker;
-        newMarker.position = [event.target._latlng.lat, event.target._latlng.lng];
-        context.setMarkerList([...context.markerList.filter(x => x !== marker), newMarker]);
+        newMarker.position = { x: event.target._latlng.lat, y: event.target._latlng.lng };
+        if(context.markerList) {
+            context.setMarkerList([...context.markerList?.filter(x => x !== marker), newMarker]);
+        } else {
+            context.setMarkerList([newMarker]);
+        }
     }
 
     const MapEvents = () => {
@@ -78,12 +89,12 @@ function Map({menu}) {
         >
             <MapEvents></MapEvents>
             {
-                context.markerList.map(marker => {
+                context.markerList?.map(marker => {
                     return (
                         <Marker 
-                            key={marker.position}
+                            key={marker.id}
                             icon={createIcon(marker.image)}
-                            position={marker.position}
+                            position={[marker.position.x, marker.position.y]}
                             draggable={ menu === "marker-edit-move" }
                             eventHandlers={{
                                 click: (e) => { removeMarker(marker); },
@@ -91,7 +102,7 @@ function Map({menu}) {
                             }}
                         >
                             <Popup>
-                                {marker.popup}
+                                {marker.data}
                             </Popup>
                         </Marker>
                     )
@@ -99,7 +110,7 @@ function Map({menu}) {
             }
 
             <LayersControl position="topright">
-            <LayersControl.BaseLayer>
+            <LayersControl.BaseLayer name="Layer">
                 <LayersControl.BaseLayer checked name="Satellite">
                 <TileLayer
                     url="http://127.0.0.1:3000/satellite/{z}/{x}/{y}.png"

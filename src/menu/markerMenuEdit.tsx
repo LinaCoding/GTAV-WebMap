@@ -1,14 +1,15 @@
 import { faArrowsAlt, faEraser, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { MainContext } from "../reactContext";
+import { IMarker, IMenuProps } from "../types/main";
 
-const MarkerMenuEdit = ({menu, setMenu}) => {
+const MarkerMenuEdit = ({menu, setMenu} : IMenuProps) => {
     const context = useContext(MainContext);
     console.log(context);
 
-    const centerMarker = (marker) => {
-        context.mapContext.setView(marker.position, context.mapContext.getZoom());
+    const centerMarker = (marker : IMarker) => {
+        context.mapContext?.setView([marker.position.x, marker.position.y], context.mapContext.getZoom());
 
         if(menu === "marker-edit-editor") {
             context.setEditMarker(marker);
@@ -17,7 +18,7 @@ const MarkerMenuEdit = ({menu, setMenu}) => {
 
     return (
         <div className="px-2">
-            <h2 class="text-4xl font-normal leading-normal mt-0 mb-2 text-blueGray-800">
+            <h2 className="text-4xl font-normal leading-normal mt-0 mb-2 text-blueGray-800">
                 Edit Markers
             </h2>
             <div className="border rounded">
@@ -52,7 +53,7 @@ const MarkerMenuEdit = ({menu, setMenu}) => {
                 <h3 className="font-bold font-normal leading-normal text-blueGray-800 p-2">Points</h3>
                 <hr />
                 <div className="p-2">
-                    <table class="border-collapse w-full border border-emerald-800 rounded">
+                    <table className="border-collapse w-full border border-emerald-800 rounded">
                         <thead>
                             <tr>
                                 <th className="w-1/3 border border-emerald-800">ID</th>
@@ -62,11 +63,11 @@ const MarkerMenuEdit = ({menu, setMenu}) => {
                         </thead>
                         <tbody className="cursor-pointer">
                             {
-                                context.markerList.map(marker => {
+                                context.markerList?.map(marker => {
                                     return (
                                         <tr className="hover:bg-blue-200" onClick={() => centerMarker(marker)}>
                                             <td className="border border-emerald-800 text-center">{marker.id}</td>
-                                            <td className="border border-emerald-800 text-center">[{marker?.position[0] + "," + marker?.position[1]}]</td>
+                                            <td className="border border-emerald-800 text-center">[{marker?.position.x + "," + marker?.position.y}]</td>
                                             <td className="border border-emerald-800">
                                                 <div className="w-full flex justify-center"><img src={marker.image} width="18" height="26"/></div>
                                             </td>

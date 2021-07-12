@@ -5,7 +5,7 @@ import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const MarkerMenuCreate = () => {
-    const [selected, setSelected] = useState({ marker: null, icon: null })
+    const [selected, setSelected] = useState({ marker: "", icon: 0 })
 
     return (
         <div className="px-2">

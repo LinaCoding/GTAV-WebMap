@@ -2,16 +2,21 @@ import { faMinusCircle, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
 import { MainContext } from "../reactContext";
+import { IDataRow } from "../types/main";
 
 const DataEditor = () => {
     const { editMarker, setEditMarker } = useContext(MainContext);
     
     const addData = () => {
-        setEditMarker({ ...editMarker, data: [...editMarker.data, {id: "", type: "", value: ""}]})
+        if(editMarker) {
+            setEditMarker({ ...editMarker, data: [...editMarker.data, {id: 0, name:"", type: "", value: ""}]})
+        }
     }
 
-    const removeData = (data) => {
-        setEditMarker({ ...editMarker, data: editMarker.data.filter(x => x !== data)});
+    const removeData = (data : IDataRow) => {
+        if(editMarker) {
+            setEditMarker({ ...editMarker, data: editMarker.data.filter(x => x !== data)});
+        }
     }
 
     return (
