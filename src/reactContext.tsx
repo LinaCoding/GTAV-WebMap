@@ -6,12 +6,12 @@ interface IMainContextProps {
 }
 
 interface IMainContext {
-    markerList: IMarker[] | undefined,
+    markerList: IMarker[],
     editMarker: IMarker | undefined,
     mapContext: L.Map | undefined,
-    setMarkerList: React.Dispatch<React.SetStateAction<IMarker[] | undefined>>,
-    setMapContext: React.Dispatch<React.SetStateAction<L.Map | undefined>>,
-    setEditMarker: React.Dispatch<React.SetStateAction<IMarker | undefined>>
+    setMarkerList: (x: IMarker[]) => void
+    setMapContext: (x: L.Map | undefined) => void
+    setEditMarker: (x: IMarker | undefined) => void
 }
 
 
@@ -26,11 +26,10 @@ export const MainContext = React.createContext<IMainContext>({
 
 const ContextState = (props : IMainContextProps) => {
     const [edit, setEdit] = useState<IMarker|undefined>(undefined);
-    const [marker, setMarker] = useState<IMarker[]|undefined>([]);
+    const [marker, setMarker] = useState<IMarker[]>([]);
     const [mapContext, setContext] = useState<L.Map|undefined>(undefined);
 
-    const setMarkerList = (markers : IMarker[] | undefined) => {
-        console.log(markers);
+    const setMarkerList = (markers : IMarker[]) => {
         setMarker(markers);
     }
     setMarkerList.bind(this);
@@ -40,19 +39,29 @@ const ContextState = (props : IMainContextProps) => {
     }
     setMapContext.bind(this);
 
-    const setEditMarker = (marker : IMarker | undefined) => {
-        setEdit(marker);
+    const setEditMarker = (newMarker : IMarker | undefined) => {
+        setEdit(newMarker);
+        
+        if(newMarker) {
+            setMarkerList(marker?.map(x => {
+                if(x.id === newMarker.id) {
+                    return newMarker
+                }
+                return x;
+            }))
+        }
+
     }
     setEditMarker.bind(this);
 
     return (
         <MainContext.Provider value={{
             markerList: marker,
-            setMarkerList: setMarker,
+            setMarkerList: setMarkerList,
             mapContext: mapContext,
-            setMapContext: setContext,
+            setMapContext: setMapContext,
             editMarker: edit,
-            setEditMarker: setEdit
+            setEditMarker: setEditMarker
         }}>
             {props.children}
         </MainContext.Provider>

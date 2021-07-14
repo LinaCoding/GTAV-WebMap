@@ -38,7 +38,6 @@ function Map({menu} : { menu: string}) {
     }
 
     const removeMarker = (marker : IMarker) => {
-        console.log(context.markerList);
         if(menu === "marker-edit-remove") {
             context.setMarkerList(context.markerList?.filter(x => x.id !== marker.id));
         }
@@ -46,13 +45,7 @@ function Map({menu} : { menu: string}) {
 
     const createMarker = (id : number, position : IPosition, marker : string, icon : string, data : IDataRow[]) => {
         merge(marker, icon).then((image) => {
-            context.setMarkerList((prev) => { 
-                if(prev) {
-                    return [...prev, { id, position, image, data: data }]; 
-                } else {
-                    return [{ id, position, image, data: data }]
-                }
-            });
+            context.setMarkerList([...context.markerList, { id, position, image, data: data }]);
         });
     }
 
@@ -102,7 +95,24 @@ function Map({menu} : { menu: string}) {
                             }}
                         >
                             <Popup>
-                                {marker.data}
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <td className="px-2 w-1/2 border border-emerald-800 font-bold">Name</td>
+                                            <td className="px-2 w-1/2 border border-emerald-800 font-bold">Value</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {marker.data.map(x => {
+                                            return (
+                                                <tr>
+                                                    <td className="w-1/2 border border-emerald-800 text-center">{x.name}</td> 
+                                                    <td className="w-1/2 border border-emerald-800 text-center">{x.value}</td>
+                                                </tr>
+                                            )
+                                        })}
+                                    </tbody>
+                                </table>
                             </Popup>
                         </Marker>
                     )

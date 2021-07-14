@@ -6,7 +6,6 @@ import { IMarker, IMenuProps } from "../types/main";
 
 const MarkerMenuEdit = ({menu, setMenu} : IMenuProps) => {
     const context = useContext(MainContext);
-    console.log(context);
 
     const centerMarker = (marker : IMarker) => {
         context.mapContext?.setView([marker.position.x, marker.position.y], context.mapContext.getZoom());

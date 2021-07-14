@@ -9,13 +9,30 @@ const DataEditor = () => {
     
     const addData = () => {
         if(editMarker) {
-            setEditMarker({ ...editMarker, data: [...editMarker.data, {id: 0, name:"", type: "", value: ""}]})
+            setEditMarker({ ...editMarker, data: [...editMarker.data, {id: 0, name:"", type: "String", value: ""}]})
         }
     }
 
     const removeData = (data : IDataRow) => {
         if(editMarker) {
             setEditMarker({ ...editMarker, data: editMarker.data.filter(x => x !== data)});
+        }
+    }
+
+    const editData = (data: IDataRow, event: any, field: string) => {
+        if(editMarker) {
+            let newData = { ...data };
+            
+            if(field === "name") newData.name = event.target.value;
+            if(field === "type") newData.type = event.target.value;
+            if(field === "value") newData.value = event.target.value;
+
+            setEditMarker({ ...editMarker, data: editMarker.data.map(x => {
+                if(data === x) {
+                    return newData;
+                }
+                return x;
+            })})
         }
     }
 
@@ -33,14 +50,14 @@ const DataEditor = () => {
                 </thead>
                 <tbody>
                     {
-                        editMarker && editMarker.data.map(data => {
+                        editMarker && editMarker.data.map((data, index) => {
                             return (
                                 <tr className="hover:bg-gray-300">
                                     <td className="border border-emerald-800 text-center">
-                                        <input className="w-full text-center bg-transparent" defaultValue={ data.name } />
+                                        <input className="w-full text-center bg-transparent" value={ data.name } onChange={(e) => editData(data, e, "name") } />
                                     </td>
                                     <td className="border border-emerald-800 text-center">
-                                        <select className="w-full bg-transparent">
+                                        <select className="w-full bg-transparent" onChange={(e) => editData(data, e, "type") }>
                                             <option selected={data.type === "String"}>String</option>
                                             <option selected={data.type === "Number"}>Number</option>
                                             <option selected={data.type === "Array"}>Array</option>
@@ -48,7 +65,8 @@ const DataEditor = () => {
                                         </select>
                                     </td>
                                     <td className="border border-emerald-800 text-center">
-                                        <input type={ data.type === "String" ? "text" : "number" } className="text-center w-full bg-transparent" defaultValue={ data.value } />
+                                        <input type={ data.type === "String" ? "text" : "number" } className="text-center w-full bg-transparent" value={ data.value } 
+                                        onChange={(e) => editData(data, e, "value") } />
                                     </td>
                                     <td className="border text-red-600 border-emerald-800 text-center px-2">
                                         <FontAwesomeIcon className="cursor-pointer" onClick={() => removeData(data)} icon={faMinusCircle}></FontAwesomeIcon>
